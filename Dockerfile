@@ -13,15 +13,13 @@ RUN mkdir /opt/elastic-ilm -p && \
 
 USER elastic-ilm
 
-RUN git clone https://github.com/HASecuritySolutions/elastic-ilm.git && \
-    cd /opt/elastic-ilm && \
+RUN cd /opt/elastic-ilm && \
+    git clone https://github.com/HASecuritySolutions/elastic-ilm.git . && \
     pipenv install && \
     cp /opt/elastic-ilm/settings.toml.example /opt/elastic-ilm/settings.toml && \
     cp /opt/elastic-ilm/client.json.example /opt/elastic-ilm/client.json
 
 WORKDIR /opt/elastic-ilm
-
-USER elastic-ilm
 STOPSIGNAL SIGTERM
 
 CMD pipenv run python ilm.py --manual 1
